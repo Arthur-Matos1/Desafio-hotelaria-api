@@ -1,0 +1,42 @@
+# Desafio Hotelaria API
+
+Projeto desenvolvido para o desafio técnico da Foco Multimídia.
+
+O objetivo do projeto é desenvolver uma aplicação para gerenciamento de hotéis, quartos e reservas.
+
+## Funcionalidades
+
+O projeto deverá possuir:
+
+- Importação de dados através de arquivos XML
+- Persistência dos dados em banco de dados MySQL
+- API REST
+- CRUD de quartos
+- Cadastro de reservas
+- Documentação do projeto
+
+## Tecnologias
+
+As principais tecnologias utilizadas serão:
+
+- PHP
+- Laravel
+- MySQL
+- Git
+- GitHub
+
+## Estrutura inicial
+
+Os arquivos XML fornecidos para o projeto estão localizados em:
+
+database/xml/
+
+Arquivos:
+
+- hotels.xml
+- rooms.xml
+- reserves.xml
+
+## Status do projeto
+
+Em desenvolvimento.
