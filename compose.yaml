@@ -68,5 +68,20 @@ services:
       retries: 20
 
 
+  swagger:
+    image: swaggerapi/swagger-ui
+
+    container_name: hotelaria_swagger
+
+    ports:
+      - "8081:8080"
+
+    volumes:
+      - ./docs/openapi.yaml:/openapi.yaml:ro
+
+    environment:
+      SWAGGER_JSON: /openapi.yaml
+
+
 volumes:
   mysql_data:

@@ -1,0 +1,287 @@
+openapi: 3.0.0
+
+info:
+  title: API Hotelaria
+  version: 1.0.0
+  description: >
+    API REST desenvolvida para gerenciamento de quartos e reservas
+    do desafio técnico de hotelaria.
+
+servers:
+  - url: http://localhost:8000
+    description: Ambiente local
+
+paths:
+
+  /api/rooms:
+    get:
+      summary: Lista todos os quartos
+      tags:
+        - Quartos
+      responses:
+        '200':
+          description: Lista de quartos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Room'
+
+    post:
+      summary: Cadastra um novo quarto
+      tags:
+        - Quartos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoomInput'
+      responses:
+        '201':
+          description: Quarto cadastrado com sucesso
+        '422':
+          description: Erro de validação
+
+
+  /api/rooms/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+
+    get:
+      summary: Busca um quarto pelo ID
+      tags:
+        - Quartos
+      responses:
+        '200':
+          description: Quarto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+
+        '404':
+          description: Quarto não encontrado
+
+    put:
+      summary: Atualiza um quarto
+      tags:
+        - Quartos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoomInput'
+      responses:
+        '200':
+          description: Quarto atualizado com sucesso
+        '404':
+          description: Quarto não encontrado
+        '422':
+          description: Erro de validação
+
+    delete:
+      summary: Exclui um quarto
+      tags:
+        - Quartos
+      responses:
+        '200':
+          description: Quarto excluído com sucesso
+        '404':
+          description: Quarto não encontrado
+
+
+  /api/reserves:
+    post:
+      summary: Cadastra uma nova reserva
+      tags:
+        - Reservas
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReserveInput'
+
+            example:
+              hotel_id: 1
+              room_id: 1
+              check_in: "2026-11-10"
+              check_out: "2026-11-13"
+              total: 600.00
+
+              guests:
+                - name: Arthur
+                  last_name: Matos
+                  phone: "11999999999"
+
+              dailies:
+                - date: "2026-11-10"
+                  value: 200.00
+                - date: "2026-11-11"
+                  value: 200.00
+                - date: "2026-11-12"
+                  value: 200.00
+
+              payments:
+                - method: 1
+                  value: 600.00
+
+      responses:
+        '201':
+          description: Reserva cadastrada com sucesso
+        '422':
+          description: Erro de validação ou quarto indisponível
+        '500':
+          description: Erro interno
+
+
+components:
+
+  schemas:
+
+    Room:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+
+        hotel_id:
+          type: integer
+          example: 1
+
+        name:
+          type: string
+          example: Room 1 Hotel 1
+
+
+    RoomInput:
+      type: object
+      required:
+        - hotel_id
+        - name
+
+      properties:
+        hotel_id:
+          type: integer
+          example: 1
+
+        name:
+          type: string
+          example: Quarto Luxo
+
+
+    GuestInput:
+      type: object
+      required:
+        - name
+        - last_name
+        - phone
+
+      properties:
+        name:
+          type: string
+          example: Arthur
+
+        last_name:
+          type: string
+          example: Matos
+
+        phone:
+          type: string
+          example: "11999999999"
+
+
+    DailyInput:
+      type: object
+      required:
+        - date
+        - value
+
+      properties:
+        date:
+          type: string
+          format: date
+          example: "2026-11-10"
+
+        value:
+          type: number
+          format: float
+          example: 200.00
+
+
+    PaymentInput:
+      type: object
+      required:
+        - method
+        - value
+
+      properties:
+        method:
+          type: integer
+          example: 1
+
+        value:
+          type: number
+          format: float
+          example: 600.00
+
+
+    ReserveInput:
+      type: object
+
+      required:
+        - hotel_id
+        - room_id
+        - check_in
+        - check_out
+        - total
+        - guests
+        - dailies
+
+      properties:
+
+        hotel_id:
+          type: integer
+          example: 1
+
+        room_id:
+          type: integer
+          example: 1
+
+        check_in:
+          type: string
+          format: date
+          example: "2026-11-10"
+
+        check_out:
+          type: string
+          format: date
+          example: "2026-11-13"
+
+        total:
+          type: number
+          format: float
+          example: 600.00
+
+        guests:
+          type: array
+          items:
+            $ref: '#/components/schemas/GuestInput'
+
+        dailies:
+          type: array
+          items:
+            $ref: '#/components/schemas/DailyInput'
+
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentInput'
