@@ -49,6 +49,17 @@ class ReserveController extends Controller
             ], 422);
         }
 
+        $reservaExistente = DB::table('reserves')
+    ->where('room_id', $dados['room_id'])
+    ->where('check_in', '<', $dados['check_out'])
+    ->where('check_out', '>', $dados['check_in'])
+    ->exists();
+
+if ($reservaExistente) {
+    return response()->json([
+        'message' => 'O quarto não está disponível nesse período.'
+    ], 422);
+}
         try {
 
             $reservaId = DB::transaction(function () use ($dados) {
