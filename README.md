@@ -93,8 +93,6 @@ Desafio-hotelaria-api/
 │   └── sql/
 │       └── schema.sql
 │
-├── docker/
-│   └── cron/
 │
 ├── docs/
 │   ├── modelagem-banco.md
