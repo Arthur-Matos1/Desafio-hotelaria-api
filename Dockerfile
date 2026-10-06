@@ -3,6 +3,7 @@ FROM php:8.4-cli
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
+    cron \
     libicu-dev \
     libonig-dev \
     libxml2-dev \
@@ -18,6 +19,10 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+RUN printf '%s\n' \
+    '* * * * * cd /var/www/html && /usr/local/bin/php artisan schedule:run >> /proc/1/fd/1 2>/proc/1/fd/2' \
+    | crontab -
 
 WORKDIR /var/www/html
 
