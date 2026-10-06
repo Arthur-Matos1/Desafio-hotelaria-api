@@ -1,0 +1,14 @@
+# Ambiente
+backend/.env
+
+# Dependências
+backend/vendor/
+backend/node_modules/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
