@@ -97,7 +97,7 @@ Desafio-hotelaria-api/
 ├── docs/
 │   ├── modelagem-banco.md
 │   ├── cron.md
-│   └── openapi.yaml
+│   └── openapi.yamlgit
 │
 ├── Dockerfile
 ├── compose.yaml
@@ -277,7 +277,7 @@ instalados diretamente no Windows.
 ## 1. Clonar o projeto
 
 ```bash
-git clone URL_DO_SEU_REPOSITORIO
+git clone https://github.com/Arthur-Matos1/Desafio-hotelaria-api.git
 ```
 
 Entre na pasta:
